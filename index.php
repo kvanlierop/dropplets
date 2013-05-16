@@ -117,7 +117,7 @@ if ($filename==NULL) {
         $content = '';
         foreach($posts as $post) {
             
-            // Get the post title.
+                        // Get the post title.
             $post_title = $post['post_title'];
             
             // Get the post author.
@@ -134,6 +134,15 @@ if ($filename==NULL) {
             
             // Get the post category.
             $post_category = $post['post_category'];
+            
+             // Get the post tag.
+            $post_tag = $post['post_tag'];
+            
+              // Get the post linkurl.
+            $post_linkurl = $post['post_linkurl'];
+            
+              // Get the post format.
+            $post_format = $post['post_format'];
             
             // Get the post status.
             $post_status = $post['post_status'];
@@ -191,6 +200,8 @@ if ($filename==NULL) {
         // Get all page meta.
         $page_meta = implode("\n", $get_page_meta);
 
+
+        		
         ob_end_clean();
     } else {
         ob_start();
@@ -321,7 +332,7 @@ else {
     } else if (file_exists($cachefile)) {
     
         // Define site title
-        $page_title = str_replace('# ', '', $fcontents[0]);
+        $page_title = str_replace('Title: ', '', $fcontents[0]);
         
         // Get the cached post.
         include $cachefile;
@@ -331,26 +342,37 @@ else {
     // If there is a file for the selected permalink, display and cache the post.
     } else {
         
-        // Get the post title.
-        $post_title = str_replace('# ', '', $fcontents[0]);
+          // Get the post title.
+        $post_title = str_replace('Title: ', '', $fcontents[0]);
         
-        // Get the post title.
-        $post_intro = htmlspecialchars($fcontents[7]);
-        
-        // Get the post author.
-        $post_author = str_replace('-', '', $fcontents[1]);
-        
-        // Get the post author Twitter ID.
-        $post_author_twitter = str_replace('- ', '', $fcontents[2]);
-        
-        // Get the published date.
-        $published_iso_date = str_replace('-', '', $fcontents[3]);
+         // Get the published date.
+        $published_iso_date = str_replace('Date: ', '', $fcontents[1]);
                 
         // Generate the published date.
         $published_date = date_format(date_create($published_iso_date), $date_format);
         
+        // Get the post author.
+        $post_author = str_replace('Author: ', '', $fcontents[2]);
+        
+        
+        // Get the post format.
+        $post_format = str_replace('Format: ', '', $fcontents[3]);
+       
         // Get the post category.
-        $post_category = str_replace('-', '', $fcontents[4]);
+        $post_category = str_replace('Category: ', '', $fcontents[4]);
+        
+        // Get the post tag.
+        $post_Tag = str_replace('Tag: ', '', $fcontents[5]);
+        
+         // Get the post link url.
+        $post_linkurl = str_replace('Link: ', '', $fcontents[6]);
+               
+        // Get the post author Twitter ID.
+        $post_author_twitter = str_replace('Twitter: ', '', $fcontents[7]);
+        
+        
+        // Get the post title.
+        $post_intro = htmlspecialchars($fcontents[10]);
         
         // Get the post link.
         $post_link = $blog_url.'/'.str_replace(array(FILE_EXT, POSTS_DIR), '', $filename);
@@ -365,7 +387,7 @@ else {
         }
         
         // Get the site title.
-        $page_title = str_replace('# ', '', $fcontents[0]);
+        $page_title = str_replace('Title: ', '', $fcontents[0]);
         
         // Generate the page description and author meta.
         $get_page_meta[] = '<meta name="description" content="' . $post_intro . '">';
@@ -390,6 +412,18 @@ else {
         
         // Generate all page meta.
         $page_meta = implode("\n", $get_page_meta);
+        
+        // Empty all post headers.
+        $fcontents[0] = "";
+		$fcontents[1] = "";
+		$fcontents[2] = "";
+		$fcontents[3] = "";
+		$fcontents[4] = "";
+		$fcontents[5] = "";
+		$fcontents[6] = "";
+		$fcontents[7] = "";
+		$fcontents[8] = "";
+        
         
         // Generate the post.
         $post = Markdown(join('', $fcontents));
@@ -518,36 +552,56 @@ function get_all_posts() {
                 $fcontents = file(POSTS_DIR.$entry);
                 
                 // Define the post title.
-                $post_title = Markdown($fcontents[0]);
+                $post_title = str_replace('Title: ', '', $fcontents[0]);
+                
+                // Define the published date.
+                $post_date = str_replace('Date: ', '', $fcontents[1]);
                 
                 // Define the post author.
-                $post_author = str_replace('-', '', $fcontents[1]);
+                $post_author = str_replace('Author: ', '', $fcontents[2]);
+
+                // Define the post author.
+                $post_format = str_replace('Format: ', '', $fcontents[3]);
                 
+                // Define the post author.
+                $post_category = str_replace('Category: ', '', $fcontents[4]);                
+                
+                // Define the post author.
+                $post_tag = str_replace('Tag: ', '', $fcontents[5]);                
+                
+                // Define the post author.
+                $post_linkurl = str_replace('Link: ', '', $fcontents[6]);                
+                                                
                 // Define the post author Twitter account.
-                $post_author_twitter = str_replace('- ', '', $fcontents[2]);
-                                
-                // Define the published date.
-                $post_date = str_replace('-', '', $fcontents[3]);
-                
-                // Define the post category.
-                $post_category = str_replace('-', '', $fcontents[4]);
-                
+                $post_author_twitter = str_replace('Twitter: ', '', $fcontents[7]);
+
                 // Define the post status.
-                $post_status = str_replace('- ', '', $fcontents[5]);
+                $post_status = str_replace('Status: ', '', $fcontents[8]);
                 
                 // Define the post intro.
-                $post_intro = Markdown($fcontents[7]);
+                $post_intro = Markdown($fcontents[10]);
+                        
+        
                 
                 // Pull everything together for the loop.
-                $files[] = array('fname' => $entry, 'post_title' => $post_title, 'post_author' => $post_author, 'post_author_twitter' => $post_author_twitter, 'post_date' => $post_date, 'post_category' => $post_category, 'post_status' => $post_status, 'post_intro' => $post_intro);
+                $files[] = array('fname' => $entry, 'post_title' => $post_title, 'post_author' => $post_author, 'post_author_twitter' => $post_author_twitter, 'post_date' => $post_date, 'post_category' => $post_category, 'post_status' => $post_status, 'post_intro' => $post_intro, 'post_tag' => $post_tag, 'post_format' => $post_format, 'post_linkurl' => $post_linkurl);
                 $post_dates[] = $post_date;
                 $post_titles[] = $post_title;
                 $post_authors[] = $post_author;
+                $post_formats[] = $post_format;
+                $post_tags[] = $post_tag;
+                $post_linkurls[] = $post_linkurl;
                 $post_authors_twitter[] = $post_author_twitter;
                 $post_categories[] = $post_category;
                 $post_statuses[] = $post_status;
                 $post_intros[] = $post_intro;
             }
+            
+               
+        
+       
+        
+        
         }
         array_multisort($post_dates, SORT_DESC, $files);
         return $files;
