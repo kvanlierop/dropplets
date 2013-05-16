@@ -14,7 +14,10 @@
         </div>
 
         <div class="three-quarters post">
+        
+        <h1><?php echo $post_title ?></h1>
             <?php echo $post ?>
+
 
             <ul class="actions">
                 <li><a class="button" href="https://twitter.com/intent/tweet?screen_name=<?php echo $post_author_twitter ?>&text=Re:%20<?php echo $post_link ?>%20" data-dnt="true">Comment on Twitter</a></li>
