@@ -1,7 +1,7 @@
 Dropplets
 =========
 
-> [v1.0.7](#version-107)
+> [v1.0.8](#version-108)
 
 Dropplets is a minimalist **Markdown** blogging platform focused on delivering just what you need in a blogging solution, but absolutely nothing you don't. When it comes to basic blogging, all you really want to do is write & publish which is where Dropplets excels. It's databaseless, so it installs on any server in just about 30 seconds. 
 
@@ -32,14 +32,17 @@ Dropplets is compatible with most server configurations and can be typically ins
 ## Writing Posts
 With Dropplets, you write your posts offline (using the text or Markdown editor of your choice) in Markdown format. Here's a handy [syntax guide](https://github.com/circa75/dropplets/wiki/Markdown-Syntax-Guide) if you need a little help with your Markdown skills. All posts for Dropplets **MUST** be composed using the following format:
 
-    # Your Post Title
-    - Post Author Name (e.g. "Dropplets")
-    - Post Author Twitter Handle (e.g. "dropplets")
-    - Publish Date in YYYY/MM/DD Format (e.g. "2013/04/28")
-    - Post Category (e.g. "Random Thoughts")
-    - Post Status (e.g. "published" or "draft")
+	Title: YOU TITLE HERE  
+	Date: YYYY-MM-DD HH-MM  
+	Author: YOUR NAME  
+	Format: FORMAT TYPE (eg. link, image, text)  
+	Category: CATEGORY  
+	Tag: TAG, IF YOU NEED IT  
+	Link: LINK URL, IF YOU’RE CREATING A LINK ENTRY  
+	Twitter: TWITTER USER NAME (SANS @)  
+	Status: PUBLISHED OR DRAFT   
 
-    Your post text starts here. 
+	Your post text starts here. 
     
 All posts must also be saved with the **.md** file extension. For instance, if your post title is **My First Blog Post**, your post file should look like this:
 
@@ -75,6 +78,10 @@ Here's a list of currently known and recommended 3rd party templates for Dropple
 Eventually, we will be implementing auto-updates for the Dropplets platform, but until then, just replace everything but your **posts** directory and **config-settings.php** when we release a new version of Dropplets.
 
 ## Changelog
+
+### Version 1.0.8
+- **NEW**: Added more meta options while creating a new post.
+- **REVISED**: Added $post_title to post.php page. 
 
 ### Version 1.0.7
 - **NEW**: Any plugin added to the "plugins" directory is now auto-included.
