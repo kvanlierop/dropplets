@@ -150,6 +150,9 @@ if ($filename==NULL) {
             // Get the post intro.
             $post_intro = $post['post_intro'];
             
+            // Get the post intro.
+            $post_full = $post['post_full'];
+            
             // Get the post link.
             $post_link = str_replace(FILE_EXT, '', $post['fname']);
             
@@ -167,6 +170,9 @@ if ($filename==NULL) {
             
             // Get the milti-post template file.
             include $posts_file;
+            
+                
+		        
         }
         echo $content;
         $content = ob_get_contents();
@@ -200,7 +206,7 @@ if ($filename==NULL) {
         // Get all page meta.
         $page_meta = implode("\n", $get_page_meta);
 
-
+        
         		
         ob_end_clean();
     } else {
@@ -424,7 +430,8 @@ else {
 		$fcontents[7] = "";
 		$fcontents[8] = "";
         
-        
+
+		        
         // Generate the post.
         $post = Markdown(join('', $fcontents));
         
@@ -581,10 +588,23 @@ function get_all_posts() {
                 // Define the post intro.
                 $post_intro = Markdown($fcontents[10]);
                         
+		        // Empty all post headers.
+                $fcontents[0] = "";
+				$fcontents[1] = "";
+				$fcontents[2] = "";
+				$fcontents[3] = "";
+				$fcontents[4] = "";
+				$fcontents[5] = "";
+				$fcontents[6] = "";
+				$fcontents[7] = "";
+				$fcontents[8] = "";
         
+        
+        		// Generate the post.
+        		$post_full = Markdown(join('', $fcontents));
                 
                 // Pull everything together for the loop.
-                $files[] = array('fname' => $entry, 'post_title' => $post_title, 'post_author' => $post_author, 'post_author_twitter' => $post_author_twitter, 'post_date' => $post_date, 'post_category' => $post_category, 'post_status' => $post_status, 'post_intro' => $post_intro, 'post_tag' => $post_tag, 'post_format' => $post_format, 'post_linkurl' => $post_linkurl);
+                $files[] = array('fname' => $entry, 'post_title' => $post_title, 'post_author' => $post_author, 'post_author_twitter' => $post_author_twitter, 'post_date' => $post_date, 'post_category' => $post_category, 'post_status' => $post_status, 'post_intro' => $post_intro, 'post_tag' => $post_tag, 'post_format' => $post_format, 'post_linkurl' => $post_linkurl, 'post_full' => $post_full);
                 $post_dates[] = $post_date;
                 $post_titles[] = $post_title;
                 $post_authors[] = $post_author;
@@ -595,6 +615,11 @@ function get_all_posts() {
                 $post_categories[] = $post_category;
                 $post_statuses[] = $post_status;
                 $post_intros[] = $post_intro;
+                $post_fulls[] = $post_full;
+                
+                                    
+		     
+        
             }
             
                
